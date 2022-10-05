@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--1.bean生命周期-->
+    <bean id="orders" class="cn.IOC_LifeCycle.one.Orders" init-method="initMethod" destroy-method="destoryMethod">
+        <property name="oName" value="订单名称"></property>
+    </bean>
+    <!--1.配置后置处理器-->
+    <bean id="myBeanPost" class="cn.IOC_LifeCycle.one.MyBeanPost"></bean>
+</beans>

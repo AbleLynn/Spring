@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--1.配置User对象创建-->
+    <bean id="user" class="cn.IOC_xml.one.User"></bean>
+
+    <!--2.set方法注入属性-->
+    <bean id="book" class="cn.IOC_xml.two.Book">
+        <!--使用property完成属性注入
+            name:类里面的属性名称
+            value:向属性注入的值
+        -->
+        <property name="bName" value="书名"></property>
+        <property name="bAuthor" value="作者"></property>
+        <!--设置bId为空值-->
+        <property name="bId">
+            <null/>
+        </property>
+        <!--设置bAddress属性值包含特殊符号
+            方式一 把<>转义
+            方式二 把特殊符号内容写到CDATA
+        -->
+        <property name="bAddress">
+            <value><![CDATA[<<地址>>]]></value>
+        </property>
+    </bean>
+
+    <!--2.1p名称空间注入，简化set方法注入-->
+    <!--<bean id="book_p" class="cn.IOC_xml.two.Book"
+    p:bName="abc" p:bAuthor="123">
+    </bean>-->
+
+    <!--3.有参方法注入属性-->
+    <bean id="orders" class="cn.IOC_xml.three.Orders">
+        <constructor-arg name="oName" value="订单名"/>
+        <constructor-arg name="oAddress" value="地址"/>
+    </bean>
+
+    <!--4.外部bean，service和dao对象创建-->
+    <bean id="userService" class="cn.IOC_xml.four.service.UserService">
+        <!--注入userDao对象
+            name属性：类里面属性名称
+            ref属性：创建userDao对象bean标签id值
+        -->
+        <property name="userDao" ref="userDaoImpl"></property>
+    </bean>
+    <bean id="userDaoImpl" class="cn.IOC_xml.four.dao.Impl.UserDaoImpl"></bean>
+
+    <!--5.内部bean，一对多关系-->
+    <bean id="emp" class="cn.IOC_xml.five_six.Emp">
+        <!--设置两个普通的属性-->
+        <property name="eName" value="姓名"></property>
+        <property name="eGender" value="性别"></property>
+        <!--内部bean对象属性-->
+        <property name="dept">
+            <bean id="dept" class="cn.IOC_xml.five_six.Dept">
+                <property name="dName" value="部门名称"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--6.级联赋值-->
+    <bean id="emp_1" class="cn.IOC_xml.five_six.Emp">
+        <!--设置两个普通的属性-->
+        <property name="eName" value="姓名"></property>
+        <property name="eGender" value="性别"></property>
+        <!--级联赋值-->
+        <property name="dept" ref="dept_1"></property>
+        <property name="dept.dName" value="部门名称"></property>
+    </bean>
+    <bean id="dept_1" class="cn.IOC_xml.five_six.Dept">
+        <property name="dName" value="部门名称"></property>
+    </bean>
+
+    <!--7.集合类型属性注入-->
+    <bean id="stu" class="cn.IOC_xml.seven_eight.Stu">
+        <!--数组类型属性注入-->
+        <property name="sources">
+            <array>
+                <value>java</value>
+                <value>c++</value>
+            </array>
+        </property>
+        <!--List属性注入-->
+        <property name="list">
+            <list>
+                <value>张三</value>
+                <value>李四</value>
+            </list>
+        </property>
+        <!--Map属性注入-->
+        <property name="map">
+            <map>
+                <entry key="Java" value="java"></entry>
+                <entry key="C++" value="c++"></entry>
+            </map>
+        </property>
+        <!--Set属性注入-->
+        <property name="set">
+            <set>
+                <value>mysql</value>
+                <value>Redis</value>
+            </set>
+        </property>
+        <!--注入list集合类型，值是对象-->
+        <property name="courseList">
+            <list>
+                <ref bean="course1"></ref>
+                <ref bean="course2"></ref>
+            </list>
+        </property>
+    </bean>
+    <!--8.创建多个course对象-->
+    <bean id="course1" class="cn.IOC_xml.seven_eight.Course">
+        <property name="cName" value="Spring5"></property>
+    </bean>
+    <bean id="course2" class="cn.IOC_xml.seven_eight.Course">
+        <property name="cName" value="Mybatis"></property>
+    </bean>
+
+    <!--9.1集合类型提取-->
+    <util:list id="bookList">
+        <value>book1</value>
+        <value>book2</value>
+        <value>book3</value>
+    </util:list>
+    <!--9.2提取list集合类型属性注入使用-->
+    <bean id="book_list" class="cn.IOC_xml.nine.Book">
+        <property name="list" ref="bookList"></property>
+    </bean>
+</beans>

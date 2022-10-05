@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1.手动装配xml-->
+    <bean id="emp" class="cn.IOC_xmlAutoWrite.one.Emp">
+        <property name="dept" ref="dept"></property>
+    </bean>
+    <bean id="dept" class="cn.IOC_xmlAutoWrite.one.Dept"></bean>
+    <!--1.自动装配xml
+        autowire属性值：
+            byName：根据属性名称注入，注入值bean的id值和类属性名称一样
+            byType：根据属性类型注入
+    -->
+    <bean id="emp_" class="cn.IOC_xmlAutoWrite.one.Emp" autowire="byName"></bean>
+    <!--<bean id="dept_" class="cn.IOC_xmlAutoWrite.one.Dept"></bean>-->
+    <bean id="emp__" class="cn.IOC_xmlAutoWrite.one.Emp" autowire="byType"></bean>
+    <!--<bean id="dept__" class="cn.IOC_xmlAutoWrite.one.Dept"></bean>-->
+</beans>

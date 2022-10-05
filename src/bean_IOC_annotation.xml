@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--1.组件扫描，基于注解方式，实现对象创建-->
+    <context:component-scan base-package="cn.IOC_annotation"></context:component-scan>
+    <!--示例1
+        use-default-filters="false" 表示不使用默认filter，自己配置filter
+        context:include-filter 设置扫描哪些内容
+        expression="org.springframework.stereotype.Controller 设置只扫描带Controller注解的类
+    -->
+    <!--<context:component-scan base-package="cn.IOC_annotation" use-default-filters="false">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>-->
+
+    <!--示例2
+        扫描包所有内容
+        context:exclude-filter  设置哪些内容不扫描
+        expression="org.springframework.stereotype.Controller 设置不扫描带Controller注解的类
+    -->
+    <!--<context:component-scan base-package="cn.IOC_annotation">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>-->
+
+    <!--2.组件扫描，基于注解方式，实现属性注入-->
+</beans>
